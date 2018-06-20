@@ -29,7 +29,7 @@ public class Schedule {
     private static Map<Integer, Integer> taskConsumptionMap;
 
     static {
-        registeredNodes = new CopyOnWriteArrayList<>();
+        registeredNodes = new ArrayList<>();
         scheduleTasks = new LinkedList<>();
         taskConsumptionMap = new LinkedHashMap<>();
     }
@@ -46,6 +46,7 @@ public class Schedule {
     public int init() {
         registeredNodes.clear();
         scheduleTasks.clear();
+        taskConsumptionMap.clear();
         return ReturnCodeKeys.E001;
     }
 
@@ -115,10 +116,11 @@ public class Schedule {
         if (taskId <= 0) {
             return ReturnCodeKeys.E009;
         }
-        if (taskConsumptionMap.containsKey(taskId)) {
+        Integer taskID = new Integer(taskId);
+        if (taskConsumptionMap.containsKey(taskID)) {
             return ReturnCodeKeys.E010;
         }
-        taskConsumptionMap.put(taskId, consumption);
+        taskConsumptionMap.put(taskID, consumption);
         return ReturnCodeKeys.E008;
     }
 
