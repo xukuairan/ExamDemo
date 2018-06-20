@@ -181,7 +181,6 @@ public class Schedule {
         }
         List<TaskInfo> copyList = new ArrayList<>(tasks);
 
-
         return ReturnCodeKeys.E015;
     }
 
@@ -224,9 +223,9 @@ public class Schedule {
 
         //节点最小总负载
         int minNodeConsumptions = 0;
-        if(nodes.length > 2){
-            minNodeConsumptions = totalConsumptions - ((nodes.length - 2) * average) -10;
-        }else{
+        if (nodes.length > 2) {
+            minNodeConsumptions = (totalConsumptions + 10) / nodes.length - 10;
+        } else {
             minNodeConsumptions = totalConsumptions - 10;
         }
 
@@ -236,13 +235,22 @@ public class Schedule {
             Map<Integer, List<Integer>> result = new HashMap<>();
             result.put(nodes[j], null);
             System.out.println("当前node：" + nodes[j]);
+
             List<Integer> nodeConsumptions = new ArrayList<>();
-            for (Integer consumption : consumptionLists) {
-                if(consumption > minNodeConsumptions){
+            Iterator<Integer> it = consumptionLists.iterator();
+            while(it.hasNext()){
+                Integer consumption = it.next();
+                System.out.println("consumption：" + consumption);
+                if (consumption > minNodeConsumptions) {
+                    System.out.println("---");
+                    nodeConsumptions.add(consumption);
+                    continue;
+                }else{
 
                 }
             }
         }
+        System.out.println(results);
     }
 
 }
